@@ -44,6 +44,7 @@ before_build:
             $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
             $env:VCVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\vcvarsall.bat")
         }
+    - call dir "%VSCOMNTOOLS%"
     - call "%VCVARSBAT_LOC%" %VCVARS_PLATFORM%
     - perl Configure %TARGET% no-asm
     - call ms\%DO%
