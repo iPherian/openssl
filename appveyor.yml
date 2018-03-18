@@ -35,10 +35,10 @@ before_build:
     - ps: >-
         If ($env:Configuration -Like "*shared*") {
             $env:MAK="ntdll.mak"
-            $env:ARTIFACT_OUT_PATH="out32"
+            $env:ARTIFACT_OUT_PATH="out32dll"
         } Else {
             $env:MAK="nt.mak"
-            $env:ARTIFACT_OUT_PATH="out32dll"
+            $env:ARTIFACT_OUT_PATH="out32"
         }
     - ps: >-
         If ($env:VSVER -Match "15") {
