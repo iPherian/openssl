@@ -35,8 +35,10 @@ before_build:
     - ps: >-
         If ($env:Configuration -Like "*shared*") {
             $env:MAK="ntdll.mak"
+            $env:ARTIFACT_OUT_PATH="out32"
         } Else {
             $env:MAK="nt.mak"
+            $env:ARTIFACT_OUT_PATH="out32dll"
         }
     - ps: >-
         If ($env:VSVER -Match "15") {
@@ -55,3 +57,7 @@ build_script:
 
 test_script:
     - nmake /f ms\%MAK% test
+    
+artifacts:
+  - path: '$(ARTIFACT_OUT_PATH)'
+    name: MyApp
