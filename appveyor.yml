@@ -39,12 +39,12 @@ before_build:
     - ps: >-
         If ($env:VSVER -Match "15") {
             $env:VSCOMNTOOLS=("C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools")
-            $env:VSVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\Auxiliary\vcvarsall.bat")
+            $env:VCVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\Auxiliary\Build\vcvarsall.bat")
         } Else {
             $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
-            $env:VSVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\vcvarsall.bat")
+            $env:VCVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\vcvarsall.bat")
         }
-    - call "%VSVARSBAT_LOC%" %VCVARS_PLATFORM%
+    - call "%VCVARSBAT_LOC%" %VCVARS_PLATFORM%
     - perl Configure %TARGET% no-asm
     - call ms\%DO%
 
