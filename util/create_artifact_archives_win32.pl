@@ -30,6 +30,7 @@ my $robocopy_opts = qq{/COPYALL /E /FP /NP};
 my_system(qq{robocopy "$obj_out_path" "$archive_tmp_path\\all\\bin" *.dll *.exe $robocopy_opts});
 my_system(qq{robocopy "$obj_out_path" "$archive_tmp_path\\all\\lib" *.lib $robocopy_opts});
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\all\\include" * $robocopy_opts});
+my_system(qq{copy "apps\\openssl.cnf" "$archive_tmp_path\\all"});
 chdir "$archive_tmp_path/all";
 my_system(qq{7z a "..\\..\\$artifact_zip_all_name" "*"});
 chdir "..\\..";
@@ -46,6 +47,7 @@ foreach my $path (@copy_for_min_bin) {
   my_system(qq{copy "$obj_out_path\\$path" "$archive_tmp_path\\min\\bin"});
 }
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\min\\include" * $robocopy_opts});
+my_system(qq{copy "apps\\openssl.cnf" "$archive_tmp_path\\min"});
 chdir "$archive_tmp_path/min";
 my_system(qq{7z a "..\\..\\$artifact_zip_min_name" "*"});
 chdir "..\\..";
