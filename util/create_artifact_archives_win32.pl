@@ -25,7 +25,7 @@ my_system(qq{robocopy "$obj_out_path" "$archive_tmp_path\\all\\lib" *.lib /COPYA
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\all\\include" * /COPYALL /E});
 chdir "$archive_tmp_path/all";
 my_system(qq{7z a "..\\..\\$artifact_zip_all_name" "*"});
-chdir "..\\.."
+chdir "..\\..";
 
 #create 'min' archive
 foreach my $path ('ssleay32.lib', 'libeay32.lib') {
@@ -37,7 +37,7 @@ foreach my $path ('ssleay32.dll', 'libeay32.dll', 'openssl.exe') {
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\min\\include" * /COPYALL /E});
 chdir "$archive_tmp_path/min";
 my_system(qq{7z a "..\\..\\$artifact_zip_min_name" "*"});
-chdir "..\\.."
+chdir "..\\..";
 
 sub my_system {
   print( join(' ',@_)."\n" );
