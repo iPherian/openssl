@@ -4,10 +4,6 @@ platform:
 
 environment:
     matrix:
-        - VSVER: 9
-        - VSVER: 10
-        - VSVER: 11
-        - VSVER: 12
         - VSVER: 14
 
 configuration:
