@@ -17,6 +17,8 @@ configuration:
     
 image: Visual Studio 2017
 
+clone_depth: 40
+
 matrix:
     allow_failures:
         - platform: x64
