@@ -68,7 +68,6 @@ after_build:
     - ps: $env:ARTIFACT_ZIP_MIN_NAME=($env:ARTIFACT_ZIP_BASE_NAME+".zip")
     - ps: $env:ARTIFACT_ZIP_ALL_NAME=($env:ARTIFACT_ZIP_BASE_NAME+"-all.zip")
     - perl util\create_artifact_archives_win32.pl
-    - ps: $env:MY_RELEASE_NAME=$env:ARTIFACT_ZIP_BASE_NAME
     
 artifacts:
     - path: '$(ARTIFACT_ZIP_MIN_NAME)'
