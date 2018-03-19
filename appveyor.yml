@@ -19,6 +19,8 @@ image: Visual Studio 2017
 
 clone_depth: 40
 
+skip_tags: true
+
 matrix:
     allow_failures:
         - platform: x64
