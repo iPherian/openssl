@@ -14,8 +14,8 @@ environment:
 configuration:
     - plain-debug
     - plain-release
-    - shared-debug
-    - shared-release
+    #- shared-debug
+    #- shared-release
 
 image: Visual Studio 2017
 
