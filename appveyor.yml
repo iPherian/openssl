@@ -12,10 +12,10 @@ environment:
         - VSVER: 15
 
 configuration:
-    - plain, release
-    - plain, debug
-    - shared, release
-    - shared, debug
+    - plain-release
+    - plain-debug
+    - shared-release
+    - shared-debug
 
 image: Visual Studio 2017
 
