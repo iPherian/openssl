@@ -14,21 +14,24 @@ foreach my $arch_base ("$archive_tmp_path/all", "$archive_tmp_path/min") {
   mkdir "$arch_base/lib";
 }
 
-my ($obj_out_path, $include_out_path, $artifact_zip_min_name,
+my ($obj_out_path, $tmp_out_path, $include_out_path, $artifact_zip_min_name,
     $artifact_zip_all_name, $configuration) =
                          @ENV{
                            qw( OBJ_OUT_PATH
+                               TMP_OUT_PATH
                                INCLUDE_OUT_PATH
                                ARTIFACT_ZIP_MIN_NAME
                                ARTIFACT_ZIP_ALL_NAME
-                               CONFIGURATION    
+                               CONFIGURATION
                            )
                          };
 my $robocopy_opts = qq{/COPYALL /E /FP /NP};
 
 # create 'all' archive
 my_system(qq{robocopy "$obj_out_path" "$archive_tmp_path\\all\\bin" *.dll *.exe $robocopy_opts});
+my_system(qq{copy "$tmp_out_path\\app.pdb" "$archive_tmp_path\\all\\bin"});
 my_system(qq{robocopy "$obj_out_path" "$archive_tmp_path\\all\\lib" *.lib $robocopy_opts});
+my_system(qq{copy "$tmp_out_path\\lib.pdb" "$archive_tmp_path\\all\\lib"});
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\all\\include" * $robocopy_opts});
 my_system(qq{copy "apps\\openssl.cnf" "$archive_tmp_path\\all"});
 chdir "$archive_tmp_path/all";
@@ -39,13 +42,15 @@ chdir "..\\..";
 foreach my $path ('ssleay32.lib', 'libeay32.lib') {
   my_system(qq{copy "$obj_out_path\\$path" "$archive_tmp_path\\min\\lib"});
 }
-my @copy_for_min_bin = ('openssl.exe');
+my_system(qq{copy "$tmp_out_path\\lib.pdb" "$archive_tmp_path\\min\\lib"});
+my @copy_obj_for_min_bin = ('openssl.exe');
 if ($configuration =~ /shared/i) {
-  push @copy_for_min_bin, 'ssleay32.dll', 'libeay32.dll';
+  push @copy_obj_for_min_bin, 'ssleay32.dll', 'libeay32.dll';
 }
-foreach my $path (@copy_for_min_bin) {
+foreach my $path (@copy_obj_for_min_bin) {
   my_system(qq{copy "$obj_out_path\\$path" "$archive_tmp_path\\min\\bin"});
 }
+my_system(qq{copy "$tmp_out_path\\app.pdb" "$archive_tmp_path\\min\\bin"});
 my_system(qq{robocopy "$include_out_path" "$archive_tmp_path\\min\\include" * $robocopy_opts});
 my_system(qq{copy "apps\\openssl.cnf" "$archive_tmp_path\\min"});
 chdir "$archive_tmp_path/min";
