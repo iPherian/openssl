@@ -119,7 +119,7 @@ artifacts:
     - path: '$(ARTIFACT_ZIP_ALL_NAME)'
       name: '$(ARTIFACT_ZIP_ALL_NAME)'
       type: Zip
-    - path: '$(OBJ_OUT_PATH)'
-      name: '$(ARTIFACT_ZIP_RAW_OUT_NAME)'
-    - path: '$(TMP_OUT_PATH)'
-      name: '$(ARTIFACT_ZIP_RAW_TMP_NAME)'
+    #- path: '$(OBJ_OUT_PATH)'
+    #  name: '$(ARTIFACT_ZIP_RAW_OUT_NAME)'
+    #- path: '$(TMP_OUT_PATH)'
+    #  name: '$(ARTIFACT_ZIP_RAW_TMP_NAME)'
