@@ -94,7 +94,7 @@ after_build:
     - ps: $env:ARTIFACT_ZIP_BASE_NAME=($env:APPVEYOR_REPO_BRANCH+"-"+$env:Configuration+"-"+$env:Platform+"-vc"+$env:VSVER+"-build_"+$env:APPVEYOR_BUILD_VERSION)
     - ps: $env:ARTIFACT_ZIP_MIN_NAME=($env:ARTIFACT_ZIP_BASE_NAME+".zip")
     - ps: $env:ARTIFACT_ZIP_ALL_NAME=($env:ARTIFACT_ZIP_BASE_NAME+"-all.zip")
-    - ps: $env:ARTIFACT_ZIP_RAW_NAME=($env:ARTIFACT_ZIP_BASE_NAME+"-raw.zip")
+    - ps: $env:ARTIFACT_ZIP_RAW_NAME=($env:ARTIFACT_ZIP_BASE_NAME+"-raw")
     - perl util\create_artifact_archives_win32.pl
 
 artifacts:
