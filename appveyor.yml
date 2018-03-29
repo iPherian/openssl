@@ -78,9 +78,17 @@ test_script:
 after_build:
     - ps: >-
         If ($env:Configuration -Like "*shared*") {
-            $env:OBJ_OUT_PATH="out32dll"
+            If ($env:Configuration -Like "*debug*") {
+                $env:OBJ_OUT_PATH="out32dll.dbg"
+            } Else {
+                $env:OBJ_OUT_PATH="out32dll"
+            }
         } Else {
-            $env:OBJ_OUT_PATH="out32"
+            If ($env:Configuration -Like "*debug*") {
+                $env:OBJ_OUT_PATH="out32.dbg"
+            } Else {
+                $env:OBJ_OUT_PATH="out32"
+            }
         }
     - ps: $env:INCLUDE_OUT_PATH="inc32"
     - ps: $env:ARTIFACT_ZIP_BASE_NAME=($env:APPVEYOR_REPO_BRANCH+"-"+$env:Configuration+"-"+$env:Platform+"-vc"+$env:VSVER+"-build_"+$env:APPVEYOR_BUILD_VERSION)
