@@ -1,16 +1,26 @@
 platform:
     - x64
-    - x86
+    #- x86
 
 environment:
     fast_finish: true
     matrix:
-        - VSVER: 14
+        #- VSVER: 14
+        - VSVER: 15
 
 configuration:
-    - shared
-    - plain
-    - minimal
+    #- shared-debug
+    #- shared-release
+    - plain-debug
+    - plain-release
+    #- minimal-debug
+    #- minimal-release
+
+image: Visual Studio 2017
+
+clone_depth: 40
+
+skip_tags: true
 
 before_build:
     - ps: >-
@@ -29,11 +39,24 @@ before_build:
         } Else {
             $env:SHARED="no-shared no-makedepend"
         }
-    - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
-    - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
+    - ps: >-
+        If ($env:Configuration -Match "debug") {
+            $env:RELEASE_TYPE="--debug"
+        } Else {
+            $env:RELEASE_TYPE="--release"
+        }
+    - ps: >-
+      If ($env:VSVER -Match "15") {
+          $env:VSCOMNTOOLS=("C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools")
+          $env:VCVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\Auxiliary\Build\vcvarsall.bat")
+      } Else {
+          $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
+          $env:VCVARSBAT_LOC=($env:VSCOMNTOOLS+"\..\..\VC\vcvarsall.bat")
+      }
+    - call "%VCVARSBAT_LOC%" %VCVARS_PLATFORM%
     - mkdir _build
     - cd _build
-    - perl ..\Configure %TARGET% %SHARED%
+    - perl ..\Configure %TARGET% %SHARED% %RELEASE_TYPE%
     - perl configdata.pm --dump
     - cd ..
     - ps: >-
@@ -51,6 +74,9 @@ build_script:
         }
     - cd ..
 
+after_build:
+    - ps: $env:ARTIFACT_ZIP_BASE_NAME=($env:APPVEYOR_REPO_BRANCH+"-"+$env:Configuration+"-"+$env:Platform+"-vc"+$env:VSVER+"-build_"+$env:APPVEYOR_BUILD_VERSION)
+
 test_script:
     - cd _build
     - ps: >-
@@ -67,3 +93,7 @@ test_script:
             cmd /c "nmake install DESTDIR=..\_install 2>&1"
         }
     - cd ..
+
+artifacts:
+    - path: '_build'
+    - name: '$(ARTIFACT_ZIP_BASE_NAME)-raw'
