@@ -96,4 +96,4 @@ test_script:
 
 artifacts:
     - path: '_build'
-    - name: '$(ARTIFACT_ZIP_BASE_NAME)-raw'
+      name: '$(ARTIFACT_ZIP_BASE_NAME)-raw'
