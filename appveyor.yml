@@ -100,4 +100,4 @@ artifacts:
     #- path: '_install'
     #  name: '$(ARTIFACT_ZIP_BASE_NAME)-raw-_install'
     - path: '_install\Program Files\OpenSSL'
-      name: '$(ARTIFACT_ZIP_BASE_NAME).zip'
+      name: '$(ARTIFACT_ZIP_BASE_NAME)'
