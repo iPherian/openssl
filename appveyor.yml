@@ -9,10 +9,10 @@ environment:
         - VSVER: 15
 
 configuration:
-    #- shared-debug
-    #- shared-release
-    - plain-debug
-    - plain-release
+    - shared-debug
+    - shared-release
+    #- plain-debug
+    #- plain-release
     #- minimal-debug
     #- minimal-release
 
