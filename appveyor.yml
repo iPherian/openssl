@@ -51,7 +51,7 @@ before_build:
     - call "%VCVARSBAT_LOC%" %VCVARS_PLATFORM%
     - mkdir _build
     - cd _build
-    - perl ..\Configure %TARGET% no-asm %SHARED% %RELEASE_TYPE%
+    - perl ..\Configure %TARGET% no-asm %SHARED% %RELEASE_TYPE% threads
     - cd ..
 
 build_script:
