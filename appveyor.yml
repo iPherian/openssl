@@ -70,7 +70,9 @@ test_script:
     - cd ..
 
 artifacts:
-    - path: '_build'
-      name: '$(ARTIFACT_ZIP_BASE_NAME)-raw-_build'
-    - path: '_install'
-      name: '$(ARTIFACT_ZIP_BASE_NAME)-raw-_install'
+    #- path: '_build'
+    #  name: '$(ARTIFACT_ZIP_BASE_NAME)-raw-_build'
+    #- path: '_install'
+    #  name: '$(ARTIFACT_ZIP_BASE_NAME)-raw-_install'
+    - path: '_install\Program Files\OpenSSL'
+      name: '$(ARTIFACT_ZIP_BASE_NAME).zip'
